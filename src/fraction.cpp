@@ -1,64 +1,84 @@
 #include "fraction.h"
+#include <sstream>
 
 using namespace std;
 
-Fraction::Fraction()
+Fraction::Fraction() :
+	m_numerator(0),
+	m_denominator(0)
 {
 }
 
-Fraction::Fraction(double /*numerator*/, double /*denominator*/)
+Fraction::Fraction(double numerator, double denominator) :
+	m_numerator(numerator),
+	m_denominator(denominator)
 {
 }
 
 double Fraction::getValue() const
 {
-	return 0;
+	if (m_numerator == 0 || m_denominator == 0)
+		return 0;
+
+	return m_numerator / m_denominator;
 }
 
-void Fraction::setNumerator(double /*value*/)
+void Fraction::setNumerator(double value)
 {
+	m_numerator = value;
 }
 
 double Fraction::getNumerator() const
 {
-	return 0;
+	return m_numerator;
 }
 
-void Fraction::setDenominator(double /*value*/)
+void Fraction::setDenominator(double value)
 {
+	m_denominator = value;
 }
 
 double Fraction::getDenominator() const
 {
-	return 0;
+	return m_denominator;
 }
 
 bool Fraction::isPositive() const
 {
-	return false;
+	return m_numerator * m_denominator >= 0;
 }
 
-Fraction Fraction::add(const Fraction &/*fraction*/) const
+Fraction Fraction::add(const Fraction &fraction) const
 {
-	return Fraction();
+	Fraction result;
+	double commonDivisor = getDenominator()*fraction.getDenominator();
+	result.setDenominator(commonDivisor);
+	result.setNumerator(getNumerator()*fraction.getDenominator() + fraction.getNumerator()*getDenominator());
+	return result;
 }
 
-Fraction Fraction::subtract(const Fraction &/*fraction*/) const
+Fraction Fraction::subtract(const Fraction &fraction) const
 {
-	return Fraction();
+	Fraction result;
+	double commonDivisor = getDenominator()*fraction.getDenominator();
+	result.setDenominator(commonDivisor);
+	result.setNumerator(getNumerator()*fraction.getDenominator() - fraction.getNumerator()*getDenominator());
+	return result;
 }
 
-Fraction Fraction::multiply(const Fraction &/*fraction*/) const
+Fraction Fraction::multiply(const Fraction &fraction) const
 {
-	return Fraction();
+	return Fraction(getNumerator()*fraction.getNumerator(), getDenominator()*fraction.getDenominator());
 }
 
-Fraction Fraction::divide(const Fraction &/*fraction*/) const
+Fraction Fraction::divide(const Fraction &fraction) const
 {
-	return Fraction();
+	return Fraction(getNumerator()*fraction.getDenominator(), getDenominator()*fraction.getNumerator());
 }
 
 string Fraction::toString() const
 {
-	return string();
+	stringstream stream;
+	stream << getNumerator() << "/" << getDenominator();
+	return stream.str();
 }

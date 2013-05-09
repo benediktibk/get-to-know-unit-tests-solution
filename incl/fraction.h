@@ -22,6 +22,8 @@ public:
 	std::string toString() const;
 
 private:
+	double m_numerator;
+	double m_denominator;
 };
 
 #endif
