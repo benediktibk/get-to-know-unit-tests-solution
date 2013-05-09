@@ -1,2 +1,7 @@
 CMakeLists.txt
 src/main.cpp
+incl/fraction.h
+incl/fractiontest.h
+src/testrunner.cpp
+src/fraction.cpp
+src/fractiontest.cpp
